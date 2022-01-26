@@ -1,6 +1,5 @@
 import {
   Box,
-  Heading,
   HStack,
   VStack,
   Text,
@@ -8,30 +7,73 @@ import {
   Image,
   Container,
 } from "@chakra-ui/react";
-import { formatPrice } from "../store/productSlice";
+import React, { useState, useEffect } from "react";
+
+import { loadStripe } from "@stripe/stripe-js";
+
+import { Elements } from "@stripe/react-stripe-js";
+
+import { formatPrice, Product } from "../store/productSlice";
+import { useStore } from "../store/useStore";
+import CheckoutForm from "./CheckoutForm";
 
 export default function Checkout() {
+  const cartItems = useStore(state => state.cartItems);
   return (
     <Container maxW={"container.lg"} py={10}>
       <Flex h="100vh">
         <HStack w="full" h="full" alignItems={"flex-start"}>
-          <PaymentArea />
-          <OrderItems />
+          <PaymentArea {...cartItems} />
+          <OrderItems {...cartItems}/>
         </HStack>
       </Flex>
     </Container>
   );
 }
 
-function PaymentArea() {
+const stripePromise = loadStripe(
+  "pk_test_51K5IwLLxHIUxOV4LYb9PrrmwfIYBiSj1CH5HrCyNph2KbIFwxhLu5PtcoNHanDHKmZ0ic3wYEWs0Imx4XPgeu0bZ00MlmzMi9h"
+);
+
+function PaymentArea(orderItems: Product[]) {
+  const [clientSecret, setClientSecret] = useState("");
+
+  useEffect(() => {
+    // Create PaymentIntent as soon as the page loads
+
+    fetch("/create-payment-intent", {
+      method: "POST",
+
+      headers: { "Content-Type": "application/json" },
+
+      body: JSON.stringify({ items: orderItems }),
+    })
+      .then((res) => res.json())
+
+      .then((data) => setClientSecret(data.clientSecret));
+  }, []);
+
+  const appearance = {
+    theme: "stripe"
+  };
+
+  const options = {
+    clientSecret,
+    appearance,
+  }
+
   return (
     <Box w="full">
-      <Heading>Pay here</Heading>
+      {clientSecret && (
+        <Elements {...options} stripe={stripePromise}>
+          <CheckoutForm />
+        </Elements>
+      )}
     </Box>
   );
 }
 
-function OrderItems() {
+function OrderItems(orderItems: Product[]) {
   return (
     <VStack w="full">
       <Text fontSize={"2xl"}>Pay with card</Text>

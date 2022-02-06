@@ -37,8 +37,8 @@ import {Link as DomLink} from "react-router-dom";
 import { CloseIcon } from "@chakra-ui/icons";
 
 import shallow from "zustand/shallow";
-import { useStore } from "../store/useStore";
-import { formatPrice } from "../store/productSlice";
+import { useStore } from "../../../store/useStore";
+import { formatPrice } from "../../product/stores/productSlice";
 
 interface ICartItem {
   name: string;

@@ -1,6 +1,6 @@
 import { SetState } from "zustand";
-import { Product } from "./productSlice";
-import { MyState } from "./useStore";
+import { Product } from "../../product/types";
+import { MyState } from "../../../store/useStore";
 
 export interface CartSlice {
   cartItems: Product[];

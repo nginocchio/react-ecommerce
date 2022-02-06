@@ -13,8 +13,9 @@ import { loadStripe } from "@stripe/stripe-js";
 
 import { Elements } from "@stripe/react-stripe-js";
 
-import { formatPrice, Product } from "../store/productSlice";
-import { useStore } from "../store/useStore";
+import { formatPrice } from "../../product/stores/productSlice";
+import {Product} from "../../product/types";
+import { useStore } from "../../../store/useStore";
 import CheckoutForm from "./CheckoutForm";
 
 export default function Checkout() {

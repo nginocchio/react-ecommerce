@@ -4,13 +4,13 @@ import {
   Route,
 } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-import ProductList from "./components/ProductList";
-import ProductDetail from "./components/ProductDetail";
-import Cart from "./components/Cart";
+import ProductList from "./features/product/components/ProductList";
+import ProductDetail from "./features/product/components/ProductDetail";
+import Cart from "./features/cart/components/Cart";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Layout from "./components/Layout";
-import Checkout from "./components/Checkout";
+import Checkout from "./features/checkout/components/Checkout";
 
 function App() {
   return (

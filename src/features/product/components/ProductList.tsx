@@ -1,7 +1,7 @@
 import shallow from "zustand/shallow";
 import { Box, SimpleGrid, Image, Badge } from "@chakra-ui/react";
-import { useStore } from "../store/useStore";
-import { Product } from "../store/productSlice";
+import { useStore } from "../../../store/useStore";
+import { Product } from "../types";
 import ProductCard from "./ProductCard";
 import { useEffect } from "react";
 

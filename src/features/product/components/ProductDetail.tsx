@@ -17,8 +17,8 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { useStore } from "../store/useStore";
-import {formatPrice} from "../store/productSlice";
+import { useStore } from "../../../store/useStore";
+import {formatPrice} from "../stores/productSlice";
 
 interface DetailProps {
   name: string;
@@ -40,7 +40,9 @@ export default function ProductDetail() {
   const product = useStore((state) => state.product);
   const getProduct = useStore((state) => state.getProduct);
   useEffect(() => {
-    getProduct(productId);
+    if (productId !== undefined) {
+      getProduct(productId);
+    }
   }, []);
 
   if (!product) return <p>loading...</p>;

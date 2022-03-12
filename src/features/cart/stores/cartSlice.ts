@@ -1,15 +1,17 @@
-import { SetState } from "zustand";
-import { Product } from "../../product/types";
-import { MyState } from "../../../store/useStore";
+import { SetState } from 'zustand'
+import { Product } from '../../product/types'
+import { MyState } from '../../../store/useStore'
 
 export interface CartSlice {
-  cartItems: Product[];
-  total: number;
-  totalQuantity: number;
-  taxes: number;
-  shipping: number;
-  productQuantities: Record<string, number>;
-  addItem: (product: Product) => void;
+  cartItems: Product[]
+  total: number
+  totalQuantity: number
+  taxes: number
+  shipping: number
+  productQuantities: Record<string, number>
+  addItem: (product: Product) => void
+  removeItem: (product: Product) => void
+  deleteItem: (product: Product) => void
 }
 
 export const createCartSlice = (set: SetState<MyState>) => ({
@@ -21,20 +23,21 @@ export const createCartSlice = (set: SetState<MyState>) => ({
   productQuantities: {},
   addItem: (product: Product) => set((state) => addItem(product, state)),
   removeItem: (product: Product) => set((state) => removeItem(product, state)),
-});
+  deleteItem: (product: Product) => set((state) => deleteItem(product, state)),
+})
 
 function recalculateTaxes(total: number) {
-  return (total = Math.round(total * 0.0985 * 100) / 100);
+  return (total = Math.round(total * 0.0985 * 100) / 100)
 }
 
 function recalculateShipping(total: number) {
-  return total > 9999 ? 0 : 599;
+  return total > 9999 ? 0 : 599
 }
 
 const addItem = (product: Product, cart: CartSlice): CartSlice => {
-  const newQuantities = cart.productQuantities;
+  const newQuantities = cart.productQuantities
   if (product.id in cart.productQuantities) {
-    newQuantities[product.id]++;
+    newQuantities[product.id]++
     return {
       ...cart,
       total: cart.total + product.price,
@@ -42,9 +45,9 @@ const addItem = (product: Product, cart: CartSlice): CartSlice => {
       taxes: recalculateTaxes(cart.total + product.price),
       totalQuantity: ++cart.totalQuantity,
       productQuantities: newQuantities,
-    };
+    }
   }
-  newQuantities[product.id] = 1;
+  newQuantities[product.id] = 1
   return {
     ...cart,
     total: cart.total + product.price,
@@ -53,16 +56,16 @@ const addItem = (product: Product, cart: CartSlice): CartSlice => {
     totalQuantity: ++cart.totalQuantity,
     productQuantities: newQuantities,
     cartItems: [...cart.cartItems, product],
-  };
-};
+  }
+}
 
 const removeItem = (product: Product, cart: CartSlice): CartSlice => {
-  const newQuantities = cart.productQuantities;
+  const newQuantities = cart.productQuantities
   if (
     product.id in cart.productQuantities &&
     cart.productQuantities[product.id] > 1
   ) {
-    newQuantities[product.id]--;
+    newQuantities[product.id]--
     return {
       ...cart,
       total: cart.total - product.price,
@@ -70,23 +73,30 @@ const removeItem = (product: Product, cart: CartSlice): CartSlice => {
       taxes: recalculateTaxes(cart.total - product.price),
       totalQuantity: --cart.totalQuantity,
       productQuantities: newQuantities,
-    };
+    }
   } else if (
     product.id in cart.productQuantities &&
     cart.productQuantities[product.id] > 0
   ) {
-    delete newQuantities[product.id];
-    return {
-      ...cart,
-      total: cart.total - product.price,
-      shipping: recalculateShipping(cart.total - product.price),
-      taxes: recalculateTaxes(cart.total - product.price),
-      totalQuantity: --cart.totalQuantity,
-      productQuantities: newQuantities,
-      cartItems: cart.cartItems.filter((cartItem) => cartItem.id === product.id),
-    };
+    return deleteItem(product, cart)
   } else {
-    console.log("Error trying to remove item that isn't in the cart");
-    return cart;
+    console.log("Error trying to remove item that isn't in the cart")
+    return cart
   }
-};
+}
+
+const deleteItem = (product: Product, cart: CartSlice): CartSlice => {
+  const newQuantities = cart.productQuantities
+  const productQuant = newQuantities[product.id]
+  delete newQuantities[product.id]
+
+  return {
+    ...cart,
+    total: cart.total - product.price * productQuant,
+    shipping: recalculateShipping(cart.total - product.price * productQuant),
+    taxes: recalculateTaxes(cart.total - product.price * productQuant),
+    totalQuantity: cart.totalQuantity - productQuant,
+    productQuantities: newQuantities,
+    cartItems: cart.cartItems.filter((cartItem) => cartItem.id !== product.id),
+  }
+}

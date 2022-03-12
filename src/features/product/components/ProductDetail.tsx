@@ -35,18 +35,7 @@ interface ICartItem {
   currency: string;
 }
 
-export default function ProductDetail() {
-  let { productId } = useParams();
-  const product = useStore((state) => state.product);
-  const getProduct = useStore((state) => state.getProduct);
-  useEffect(() => {
-    if (productId !== undefined) {
-      getProduct(productId);
-    }
-  }, []);
-
-  if (!product) return <p>loading...</p>;
-
+export default function ProductDetail(product: ICartItem) {
   return (
     <Stack spacing={10} maxW={"1200px"} margin={"auto"}>
       <MainContent {...product} />

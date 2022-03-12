@@ -11,7 +11,7 @@ export function formatPrice(price: number) {
 
 export interface ProductSlice {
   products: Product[] | [];
-  product: Product | undefined;
+  product?: Product;
   getProducts: () => Promise<void>;
   getProduct: (productId: string) => Promise<void>;
 }
@@ -26,5 +26,5 @@ export const createProductSlice = (set: SetState<MyState>) => ({
   getProduct: async (productId: string) => {
     const product = await getProduct(productId)
     set({product: product})
-  }
+  },
 });

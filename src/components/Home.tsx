@@ -7,13 +7,16 @@ import {
   SimpleGrid,
   Text,
   Stack,
+  Link,
 } from "@chakra-ui/react";
 
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import Navbar from "./Navbar";
 
 export default function Home() {
   return (
     <Box>
+      <Navbar />
       <Flex
         w={"100wh"}
         h={"100vh"}
@@ -42,9 +45,9 @@ export default function Home() {
             Don't miss this seasons hottest styles at their lowest prices all
             year!
           </Text>
-          <Button>
-            <Link to="/products">Shop now</Link>
-          </Button>
+            <Link as={RouterLink} to="/products">
+              <Button as="a" cursor="pointer" w="full">Shop Now</Button>
+            </Link>
         </Stack>
       </Flex>
       <Stack spacing={1} direction={"row"} w={"full"} height={"600px"} p={4}>

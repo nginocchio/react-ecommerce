@@ -1,7 +1,7 @@
 import { useRoutes } from 'react-router-dom'
 
 import Home from '../components/Home'
-import Checkout from '../features/checkout/components/Checkout'
+import { CheckoutRoutes } from '../features/checkout'
 import { ProductRoutes } from '../features/product'
 import { CartRoute } from '../features/cart'
 
@@ -17,7 +17,7 @@ export const AppRoutes = () => {
     },
     {
       path: '/checkout',
-      element: <Checkout />,
+      element: <CheckoutRoutes />,
     },
     {
       path: '/products/*',

@@ -1,9 +1,39 @@
 {
-    "products": [
-        { "id": 1, "name": "sweater", "price": 3999, "image": "https://storage.googleapis.com/image_bucket_ecommerce/chino-mens.jpg", "currency": "USD"},
-        { "id": 2, "name": "pants", "price": 3999, "image": "https://storage.googleapis.com/image_bucket_ecommerce/chino-womens.jpg", "currency": "USD"},
-        { "id": 3, "name": "jeans", "price": 3999, "image": "https://storage.googleapis.com/image_bucket_ecommerce/classic-watch.jpg", "currency": "USD"},
-        { "id": 4, "name": "shoes", "price": 3999, "image": "https://storage.googleapis.com/image_bucket_ecommerce/sude-brown-shoes.webp", "currency": "USD"},
-        { "id": 5, "name": "sweater", "price": 3999, "image": "https://storage.googleapis.com/image_bucket_ecommerce/sweater-black-mens.webp", "currency": "USD"}
-    ]
+  "products": [
+    {
+      "id": 1,
+      "name": "sweater",
+      "price": 3999,
+      "image": "https://storage.googleapis.com/image_bucket_ecommerce/chino-mens.jpg",
+      "currency": "USD"
+    },
+    {
+      "id": 2,
+      "name": "pants",
+      "price": 3999,
+      "image": "https://storage.googleapis.com/image_bucket_ecommerce/chino-womens.jpg",
+      "currency": "USD"
+    },
+    {
+      "id": 3,
+      "name": "jeans",
+      "price": 3999,
+      "image": "https://storage.googleapis.com/image_bucket_ecommerce/classic-watch.jpg",
+      "currency": "USD"
+    },
+    {
+      "id": 4,
+      "name": "shoes",
+      "price": 3999,
+      "image": "https://storage.googleapis.com/image_bucket_ecommerce/sude-brown-shoes.webp",
+      "currency": "USD"
+    },
+    {
+      "id": 5,
+      "name": "sweater",
+      "price": 3999,
+      "image": "https://storage.googleapis.com/image_bucket_ecommerce/sweater-black-mens.webp",
+      "currency": "USD"
+    }
+  ]
 }
